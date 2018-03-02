@@ -10,7 +10,6 @@ class MyApp extends StatelessWidget {
   //A widget’s main job is to provide a build() method
   // that describes how to display the widget in terms of other, lower level widgets.
   Widget build(BuildContext context) {
-    final wordPair = new WordPair.random();
     //Material, base Widget with Material design standard
     return new MaterialApp(
       title: 'Welcome to Flutter',
@@ -22,9 +21,23 @@ class MyApp extends StatelessWidget {
           title: new Text('Welcome to Flutter'),
         ),
         body: new Center(
-          child: new Text(wordPair.asPascalCase),
+          child: new RandomWords(),
         ),
       ),
     );
   }
+}
+
+class RandomWords extends StatefulWidget {
+  @override
+  createState() => new RandomWordsState();
+}
+
+class RandomWordsState extends State<RandomWords> {
+  @override
+  Widget build(BuildContext context) {
+    final wordPair = new WordPair.random();
+    return new Text(wordPair.asPascalCase);
+  }
+
 }
