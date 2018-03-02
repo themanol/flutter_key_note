@@ -30,14 +30,35 @@ class RandomWordsState extends State<RandomWords> {
   //(_). Prefixing an identifier with an underscore
   // enforces privacy in the Dart language.
   final _suggestions = <WordPair>[];
+
+  final _saved = new Set<WordPair>();
+
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   Widget _buildRow(WordPair pair) {
+    final alreadySaved = _saved.contains(pair);
+
     return new ListTile(
       title: new Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
+      trailing: new Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
+      onTap: () {
+        //In Flutter’s react style framework, calling setState()
+        // triggers a call to the build() method for the State object,
+        // resulting in an update to the UI.
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
     );
   }
 
